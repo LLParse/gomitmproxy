@@ -6,9 +6,11 @@ import (
 	"bytes"
 	"crypto/tls"
 	"encoding/pem"
+	"fmt"
 	"io"
 	"net"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 	"time"
@@ -16,6 +18,7 @@ import (
 	"github.com/AdguardTeam/golibs/log"
 	"github.com/AdguardTeam/gomitmproxy/proxyutil"
 	"github.com/pkg/errors"
+	"golang.org/x/net/proxy"
 )
 
 var errClientCertRequested = errors.New("tls: client cert authentication unsupported")
@@ -64,10 +67,17 @@ type Proxy struct {
 }
 
 // NewProxy creates a new instance of the Proxy.
-func NewProxy(config Config) *Proxy {
+func NewProxy(config Config, socksProxyAddress string) *Proxy {
+	// create a socks5 dialer
+	dialer, err := proxy.SOCKS5("tcp", socksProxyAddress, nil, proxy.Direct)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "can't connect to the proxy:", err)
+		os.Exit(1)
+	}
 	proxy := &Proxy{
 		Config: config,
 		transport: &http.Transport{
+			Dial: dialer.Dial,
 			// This forces http.Transport to not upgrade requests to HTTP/2.
 			// TODO: Remove when HTTP/2 can be supported.
 			TLSNextProto:          make(map[string]func(string, *tls.Conn) http.RoundTripper),

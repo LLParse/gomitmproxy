@@ -1,4 +1,4 @@
-module github.com/AdguardTeam/gomitmproxy
+module github.com/llparse/gomitmproxy
 
 go 1.20
 
@@ -6,6 +6,7 @@ require (
 	github.com/AdguardTeam/golibs v0.13.2
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.2
+	golang.org/x/net v0.8.0
 	golang.org/x/text v0.8.0
 )
 
