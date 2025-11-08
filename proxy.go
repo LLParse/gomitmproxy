@@ -68,10 +68,19 @@ type Proxy struct {
 
 // NewProxy creates a new instance of the Proxy.
 func NewProxy(config Config, socksProxyAddress string) *Proxy {
+	// create a socks5 dialer
+	dialer, err := proxy.SOCKS5("tcp", socksProxyAddress, nil, &net.Dialer{
+		Timeout:   dialTimeout,
+		KeepAlive: dialTimeout,
+	})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "can't connect to the proxy:", err)
+		os.Exit(1)
+	}
 	p := &Proxy{
 		Config: config,
 		transport: &http.Transport{
-			// Dial: dialer.Dial,
+			Dial: dialer.Dial,
 			// This forces http.Transport to not upgrade requests to HTTP/2.
 			// TODO: Remove when HTTP/2 can be supported.
 			TLSNextProto:          make(map[string]func(string, *tls.Conn) http.RoundTripper),
@@ -91,15 +100,6 @@ func NewProxy(config Config, socksProxyAddress string) *Proxy {
 		timeout:         defaultTimeout,
 		invalidTLSHosts: map[string]bool{},
 		closing:         make(chan bool),
-	}
-	// create a socks5 dialer
-	dialer, err := proxy.SOCKS5("tcp", socksProxyAddress, nil, &net.Dialer{
-		Timeout:   dialTimeout,
-		KeepAlive: dialTimeout,
-	})
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "can't connect to the proxy:", err)
-		os.Exit(1)
 	}
 	p.dial = dialer.Dial
 
