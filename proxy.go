@@ -16,7 +16,7 @@ import (
 	"time"
 
 	"github.com/AdguardTeam/golibs/log"
-	"github.com/AdguardTeam/gomitmproxy/proxyutil"
+	"github.com/llparse/gomitmproxy/proxyutil"
 	"github.com/pkg/errors"
 	"golang.org/x/net/proxy"
 )
@@ -281,7 +281,7 @@ func (p *Proxy) handleRequest(ctx *Context) (err error) {
 				// Do not return any error here as we must keep the connection
 				// alive. When the client receives 407 error, it can write
 				// another request with user credentials to the same connection.
-				// See https://github.com/AdguardTeam/gomitmproxy/pull/19.
+				// See https://github.com/llparse/gomitmproxy/pull/19.
 				return nil
 			}
 		}

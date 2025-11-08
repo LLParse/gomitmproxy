@@ -1,12 +1,12 @@
 [![Code Coverage](https://img.shields.io/codecov/c/github/AdguardTeam/gomitmproxy/master.svg)](https://codecov.io/github/AdguardTeam/gomitmproxy?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/AdguardTeam/gomitmproxy)](https://goreportcard.com/report/AdguardTeam/gomitmproxy)
-[![GolangCI](https://golangci.com/badges/github.com/AdguardTeam/gomitmproxy.svg)](https://golangci.com/r/github.com/AdguardTeam/gomitmproxy)
-[![Go Doc](https://godoc.org/github.com/AdguardTeam/gomitmproxy?status.svg)](https://godoc.org/github.com/AdguardTeam/gomitmproxy)
+[![Go Report Card](https://goreportcard.com/badge/github.com/llparse/gomitmproxy)](https://goreportcard.com/report/AdguardTeam/gomitmproxy)
+[![GolangCI](https://golangci.com/badges/github.com/llparse/gomitmproxy.svg)](https://golangci.com/r/github.com/llparse/gomitmproxy)
+[![Go Doc](https://godoc.org/github.com/llparse/gomitmproxy?status.svg)](https://godoc.org/github.com/llparse/gomitmproxy)
 
 # gomitmproxy
 
 This is a customizable HTTP proxy with TLS interception support.
-It was created as a part of [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome).
+It was created as a part of [AdGuard Home](https://github.com/llparse/AdGuardHome).
 However, it can be used for different purposes so we decided to make it a separate project.
 
 ## Features
@@ -30,7 +30,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/AdguardTeam/gomitmproxy"
+	"github.com/llparse/gomitmproxy"
 )
 
 func main() {
